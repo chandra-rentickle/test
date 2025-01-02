@@ -13,15 +13,15 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
-    SequelizeModule.forRoot({
-      dialect: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      username: 'root',
-      password: 'root',
-      database: 'ecommerce',
-      autoLoadModels: true,
-      synchronize: true,
+    SequelizeModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
+        dialect: 'mysql',
+        uri: configService.get<string>('DB_URI'),
+        autoLoadModels: true,
+        synchronize: true,  //here i am connectin g to local db that's why done sync: true
+      }),
+      inject: [ConfigService],
     }),
     AppConfigModule,
     OrderServiceModule,
