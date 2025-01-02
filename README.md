@@ -20,7 +20,7 @@ ecommerce-app/
 
 ```
 
-
+```
 backend/src/
 ├── inventory-service/
 │   ├── controllers/
@@ -32,9 +32,10 @@ backend/src/
 │   ├── dtos/
 │   │   ├── create-inventory.dto.ts
 │   ├── inventory-service.module.ts
+```
 
 
-
+```
 backend/src/
 ├── inventory-service/
 │   ├── controllers/
@@ -98,3 +99,4 @@ backend/src/
 │   ├── shipping-service.module.ts
 ├── main.ts
 ├── app.module.ts
+```
