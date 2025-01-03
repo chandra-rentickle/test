@@ -100,3 +100,85 @@ backend/src/
 ├── main.ts
 ├── app.module.ts
 ```
+
+
+
+## Cloud Architecture
+
+```
+title E-commerce Application Architecture
+direction right
+title E-commerce Application Architecture
+
+Frontend [icon: monitor] {
+  User Interface [icon: monitor]
+}
+
+API Gateway [icon: aws-api-gateway]
+
+Backend Services [icon: server] {
+  Order Service [icon: package]
+    Order Database  [icon: database] {
+    Orders Table [icon:table]
+    Order_Items Table [icon:table]
+    }
+  Product Service [icon: box]
+    Product Database  [icon: database] {
+    Products Table [icon:table]
+    Categories Table [icon:table]
+    }
+  User Service [icon: user]
+    User Database  [icon: database] {
+    Users Table [icon:table]
+    User_Profiles Table [icon:table]
+    }
+  Payment Service [icon: dollar-sign]
+    Payment Database  [icon: database] {
+    Payments Table [icon:table]
+    Transactions Table [icon:table]
+    }
+  Inventory Service [icon: layers]
+    Inventory Database  [icon: database] {
+    Inventory Table [icon:table]
+    Stock_Updates Table [icon:table]
+    }
+  Shipping Service [icon: truck]
+    Shipping Database  [icon: database] {
+    Shipments Table [icon:table]
+    Tracking Table [icon:table]
+    }
+}
+
+Infrastructure [icon: settings] {
+  Docker Compose [icon: docker, label: "docker-compose.yml"]
+  Kubernetes [icon: k8s-cluster]
+}
+
+// Connections
+Frontend > API Gateway: routes requests
+
+// API Gateway connections
+API Gateway > Order Service
+API Gateway > Product Service
+API Gateway > User Service
+API Gateway > Payment Service
+API Gateway > Inventory Service
+API Gateway > Shipping Service
+
+// Infrastructure support
+Docker Compose --> Backend Services: local setup
+Kubernetes --> Backend Services: deployment and scaling
+Order Service > Orders Table
+Order Service > Order_Items Table
+Product Service > Products Table
+Product Service > Categories Table
+User Service > Users Table
+User Service > User_Profiles Table
+Payment Service > Payments Table
+Payment Service > Transactions Table
+Inventory Service > Inventory Table
+Inventory Service > Stock_Updates Table
+Shipping Service > Shipments Table
+Shipping Service > Tracking Table
+
+```
