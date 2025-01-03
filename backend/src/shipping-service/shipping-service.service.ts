@@ -1,26 +1,37 @@
 import { Injectable } from '@nestjs/common';
-import { CreateShippingServiceDto } from './dto/create-shipping-service.dto';
-import { UpdateShippingServiceDto } from './dto/update-shipping-service.dto';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { Shipment } from './entities/shipping.entity';
 
 @Injectable()
-export class ShippingServiceService {
-  create(createShippingServiceDto: CreateShippingServiceDto) {
-    return 'This action adds a new shippingService';
+export class ShipmentService {
+  constructor(
+    @InjectModel(Shipment.name) private shipmentModel: Model<Shipment>,
+  ) {}
+
+  async create(shipmentData: Partial<Shipment>): Promise<Shipment> {
+    const shipment = new this.shipmentModel(shipmentData);
+    return shipment.save();
   }
 
-  findAll() {
-    return `This action returns all shippingService`;
+  async findAll(): Promise<Shipment[]> {
+    return this.shipmentModel.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} shippingService`;
+  async findOne(trackingNumber: string): Promise<Shipment> {
+    return this.shipmentModel.findOne({ trackingNumber }).exec();
   }
 
-  update(id: number, updateShippingServiceDto: UpdateShippingServiceDto) {
-    return `This action updates a #${id} shippingService`;
+  async updateStatus(
+    trackingNumber: string,
+    status: string,
+  ): Promise<Shipment> {
+    return this.shipmentModel
+      .findOneAndUpdate({ trackingNumber }, { status }, { new: true })
+      .exec();
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} shippingService`;
+  async delete(trackingNumber: string): Promise<Shipment> {
+    return this.shipmentModel.findOneAndDelete({ trackingNumber }).exec();
   }
 }

@@ -10,7 +10,7 @@ export class OrderService {
     @InjectModel(OrderModel)
     private readonly orderModel: typeof OrderModel,
   ) {}
-
+   
   create(createOrderDto: CreateOrderDto): Promise<OrderModel> {
     return this.orderModel.create(createOrderDto);
   }

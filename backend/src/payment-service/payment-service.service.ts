@@ -9,7 +9,7 @@ export class PaymentService {
     private readonly paymentModel: typeof PaymentModel,
   ) {}
 
-  async createProduct(){
-    return "hello product 1"
+  async createProduct() {
+    return 'hello product 1';
   }
 }

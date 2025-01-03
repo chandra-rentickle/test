@@ -1,34 +1,49 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { ShippingServiceService } from './shipping-service.service';
-import { CreateShippingServiceDto } from './dto/create-shipping-service.dto';
-import { UpdateShippingServiceDto } from './dto/update-shipping-service.dto';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Put,
+  Delete,
+} from '@nestjs/common';
 
-@Controller('shipping-service')
-export class ShippingServiceController {
-  constructor(private readonly shippingServiceService: ShippingServiceService) {}
+import { Shipment } from './entities/shipping.entity';
+import { ShipmentService } from './shipping-service.service';
+
+@Controller('shipments')
+export class ShipmentController {
+  constructor(private readonly shipmentService: ShipmentService) {}
 
   @Post()
-  create(@Body() createShippingServiceDto: CreateShippingServiceDto) {
-    return this.shippingServiceService.create(createShippingServiceDto);
+  async create(@Body() shipmentData: Partial<Shipment>): Promise<Shipment> {
+    return this.shipmentService.create(shipmentData);
   }
 
   @Get()
-  findAll() {
-    return this.shippingServiceService.findAll();
+  async findAll(): Promise<Shipment[]> {
+    return this.shipmentService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.shippingServiceService.findOne(+id);
+  @Get(':trackingNumber')
+  async findOne(
+    @Param('trackingNumber') trackingNumber: string,
+  ): Promise<Shipment> {
+    return this.shipmentService.findOne(trackingNumber);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateShippingServiceDto: UpdateShippingServiceDto) {
-    return this.shippingServiceService.update(+id, updateShippingServiceDto);
+  @Put(':trackingNumber/status')
+  async updateStatus(
+    @Param('trackingNumber') trackingNumber: string,
+    @Body('status') status: string,
+  ): Promise<Shipment> {
+    return this.shipmentService.updateStatus(trackingNumber, status);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.shippingServiceService.remove(+id);
+  @Delete(':trackingNumber')
+  async delete(
+    @Param('trackingNumber') trackingNumber: string,
+  ): Promise<Shipment> {
+    return this.shipmentService.delete(trackingNumber);
   }
 }
