@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weekly Timetable</title>
+</head>
+<body>
+    <h1>Weekly Timetable</h1>
+    <form action="/save" method="POST">
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Day</th>
+                    <th>Time</th>
+                    <th>Activity</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]; %>
+                <% days.forEach(function(day) { %>
+                    <tr>
+                        <td><%= day %></td>
+                        <td><input type="time" name="<%= day %>_time"></td>
+                        <td><input type="text" name="<%= day %>_activity"></td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+        <br>
+        <button type="submit">Save Timetable</button>
+    </form>
+    <h2>Timetable:</h2>
+    <div id="timetable">
+        <% timetable.forEach(function(day) { %>
+            <h3><%= day.day %></h3>
+            <ul>
+                <% day.tasks.forEach(function(task) { %>
+                    <li><%= task.time %> - <%= task.activity %></li>
+                <% }); %>
+            </ul>
+        <% }); %>
+    </div>
+    <button id="downloadPdf">Download as PDF</button>
+    <script>
+        document.getElementById('downloadPdf').onclick = function () {
+            window.location.href = '/download';
+        };
+    </script>
+</body>
+</html>
