@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { PaymentListener } from './app.controller';
+import { PaymentListener } from './payment.listener';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 
 @Module({

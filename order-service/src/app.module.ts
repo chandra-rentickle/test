@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { OrderController } from './app.controller';
+import { OrderController } from './order.controller';
 import { ClientKafka, ClientsModule, Transport } from '@nestjs/microservices';
 
 @Module({
